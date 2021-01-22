@@ -33,3 +33,10 @@
     purge: "{{ nvidia_driver_package_state == 'absent' }}"
   register: install_driver
   environment: "{{proxy_env if proxy_env is defined else {}}}"
+
+- name: remove repo
+  apt_repository:
+    repo: "deb {{ nvidia_driver_ubuntu_cuda_repo_baseurl }} /"
+    update_cache: yes
+    state: absent
+  environment: "{{proxy_env if proxy_env is defined else {}}}"
